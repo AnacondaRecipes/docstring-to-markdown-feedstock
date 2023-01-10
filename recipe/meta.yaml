@@ -39,6 +39,7 @@ about:
     In the future will be able to convert Google docstrings too
   license: LGPL-2.1-or-later
   license_file: LICENSE
+  license_family: LGPL
   dev_url: https://github.com/python-lsp/docstring-to-markdown
   doc_url: https://github.com/python-lsp/docstring-to-markdown/blob/main/README.md
 
