@@ -10,15 +10,17 @@ source:
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps
+  skip: True  # [py<36]
 
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python
+    - wheel
+    - setuptools
   run:
-    - python >=3.6
+    - python
 
 test:
   imports:
@@ -31,9 +33,15 @@ test:
 about:
   home: https://pypi.org/project/docstring-to-markdown
   summary: On the fly conversion of Python docstrings to markdown
+  description: |
+    On the fly conversion of Python docstrings to markdown.
+    Currently can recognise reStructuredText and convert multiple of its features to Markdown.
+    In the future will be able to convert Google docstrings too
   license: LGPL-2.1-or-later
   license_file: LICENSE
+  license_family: LGPL
   dev_url: https://github.com/python-lsp/docstring-to-markdown
+  doc_url: https://github.com/python-lsp/docstring-to-markdown/blob/main/README.md
 
 extra:
   recipe-maintainers:
