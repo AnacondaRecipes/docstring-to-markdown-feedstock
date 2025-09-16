@@ -1,26 +1,27 @@
-{% set version = "0.11" %}
+{% set version = "0.17" %}
 
 package:
   name: docstring-to-markdown
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/d/docstring-to-markdown/docstring-to-markdown-{{ version }}.tar.gz
-  sha256: 5b1da2c89d9d0d09b955dec0ee111284ceadd302a938a03ed93f66e09134f9b5
+  url: https://pypi.org/packages/source/d/docstring-to-markdown/docstring_to_markdown-0.17.tar.gz
+  sha256: df72a112294c7492487c9da2451cae0faeee06e86008245c188c5761c9590ca3
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps
-  skip: True  # [py<36]
+  skip: true  # [py<37]
 
 requirements:
   host:
     - pip
     - python
-    - wheel
     - setuptools
   run:
     - python
+    - importlib-metadata >=3.6
+    - typing_extensions >=4.6
 
 test:
   imports:
