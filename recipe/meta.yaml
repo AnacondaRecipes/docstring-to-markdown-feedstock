@@ -1,16 +1,17 @@
+{% set name = "docstring-to-markdown" %}
 {% set version = "0.17" %}
 
 package:
-  name: docstring-to-markdown
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/d/docstring-to-markdown/docstring_to_markdown-0.17.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name|replace('-', '_') }}-{{ version }}.tar.gz
   sha256: df72a112294c7492487c9da2451cae0faeee06e86008245c188c5761c9590ca3
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv --no-deps
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<37]
 
 requirements:
@@ -24,12 +25,22 @@ requirements:
     - typing_extensions >=4.6
 
 test:
+  source_files:
+    - tests
   imports:
     - docstring_to_markdown
-  commands:
-    - pip check
+    - docstring_to_markdown.cpython
+    - docstring_to_markdown.google
+    - docstring_to_markdown.plain
+    - docstring_to_markdown.rst
+    - docstring_to_markdown.types
   requires:
     - pip
+    - pytest
+  commands:
+    - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest -v tests
 
 about:
   home: https://pypi.org/project/docstring-to-markdown
